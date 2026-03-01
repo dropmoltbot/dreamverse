@@ -1,189 +1,119 @@
-# DreamVerse - Open Source AI Music Platform
+# 🎵 DreamVerse - Open Source AI Music Generator
 
-## 🏗️ Architecture Open Source
+<p align="center">
+  <img src="https://img.shields.io/github/stars/dropmoltbot/dreamverse" alt="stars">
+  <img src="https://img.shields.io/github/license/dropmoltbot/dreamverse" alt="license">
+  <img src="https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-purple" alt="stack">
+</p>
+
+> Generate unique music with AI • Open Source • Self-hostable
+
+## ✨ Features
+
+- 🎵 **AI Music Generation** - Powered by Meta MusicGen
+- 🎨 **Modern UI** - Glassmorphism design with smooth animations
+- 🔓 **Open Source** - Fully transparent and auditable
+- 🚀 **Easy Deploy** - Vercel, Render, HuggingFace free tiers
+- 📱 **Responsive** - Works on desktop and mobile
+
+## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        FRONTEND                                  │
-│  DreamVerse (Vercel)                                           │
-│  - React + Vite + Tailwind                                     │
-│  - Framer Motion + Lenis Scroll                                │
-└───────────────────────────┬─────────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                        BACKEND (Open Source)                     │
-│                                                                  │
-│  ┌─────────────────┐    ┌─────────────────┐                    │
-│  │  Supabase       │    │  MusicGen API   │                    │
-│  │  - Auth         │    │  (Meta)         │                    │
-│  │  - Database     │    │  - Docker       │                    │
-│  │  - Storage     │    │  - GPU/CPU      │                    │
-│  └─────────────────┘    └─────────────────┘                    │
-│                                                                  │
-│  ┌─────────────────┐    ┌─────────────────┐                    │
-│  │  Uvicorn/FastAPI│    │  HuggingFace   │                    │
-│  │  - Routes       │    │  Inference     │                    │
-│  │  - Middleware  │    │  - Endpoints   │                    │
-│  └─────────────────┘    └─────────────────┘                    │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   Frontend     │────▶│   Backend      │────▶│   AI Service   │
+│   (Vercel)    │     │   (Render)    │     │  (HuggingFace) │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+                              │
+                              ▼
+                       ┌─────────────────┐
+                       │   Supabase     │
+                       │  (Database)    │
+                       └─────────────────┘
 ```
 
----
+## 🚀 Quick Deploy (100% Free)
 
-## 🛠️ Stack Open Source
-
-| Feature | Solution | License |
-|---------|----------|---------|
-| **AI Music** | Meta MusicGen | MIT |
-| **Auth** | Supabase Auth | Apache 2 |
-| **Database** | Supabase PostgreSQL | Apache 2 |
-| **Storage** | Supabase Storage | Apache 2 |
-| **Backend** | FastAPI | MIT |
-| **Frontend** | React + Vite | MIT |
-| **Hosting** | Vercel + Railway | Freemium |
-
----
-
-## 📦 Dépendances
-
-### Backend
-```json
-{
-  "fastapi": "^0.109.0",
-  "uvicorn": "^0.27.0",
-  "supabase": "^2.3.0",
-  "python-multipart": "^0.0.6",
-  "httpx": "^0.26.0",
-  "pydantic": "^2.5.0"
-}
+### 1. Frontend → Vercel
+```
+1. https://vercel.com
+2. Import GitHub: dropmoltbot/dreamverse
+3. Framework: Vite
+4. Output: dist
+5. Deploy!
 ```
 
-### AI Inference
-```python
-# MusicGen Docker
-# Meta's MusicGen - Apache 2 License
-# https://github.com/facebookresearch/audiocraft
+### 2. Database → Supabase
+```
+1. https://supabase.com → New Project
+2. SQL Editor → Run schema.sql
+3. Get URL + Anon Key
 ```
 
----
+### 3. Backend → Render
+```
+1. https://render.com → New Web Service
+2. Connect GitHub: dropmoltbot/dreamverse
+3. Root: backend
+4. Build: pip install -r requirements.txt  
+5. Start: uvicorn main:app --reload
+6. Add ENV: SUPABASE_URL, SUPABASE_KEY
+7. Deploy!
+```
 
-## 🔧 Setup
+### 4. AI → HuggingFace Spaces
+```
+1. https://huggingface.co/spaces → Create New Space
+2. Repo: dreamverse-musicgen
+3. SDK: Docker
+4. Upload: ai/Dockerfile + ai/inference.py
+5. Deploy!
+```
 
-### 1. Backend (FastAPI + MusicGen)
+## 📦 Tech Stack
+
+| Layer | Tech | License |
+|-------|------|---------|
+| Frontend | React + Vite + Tailwind | MIT |
+| Backend | FastAPI | MIT |
+| AI | Meta MusicGen | Apache 2 |
+| Database | Supabase (PostgreSQL) | Apache 2 |
+| Hosting | Vercel + Render + HF | Free tiers |
+
+## 🎵 Usage
+
 ```bash
-cd backend
+# Clone
+git clone https://github.com/dropmoltbot/dreamverse.git
+cd dreamverse
+
+# Frontend
+cd frontend
+npm install
+npm run dev
+
+# Backend
+cd ../backend
 pip install -r requirements.txt
-python main.py
+uvicorn main:app --reload
 ```
 
-### 2. AI Service (MusicGen)
-```bash
-# Option A: Local Docker
-docker build -t musicgen .
-docker run -p 7860:7860 musicgen
+## 🔧 Environment Variables
 
-# Option B: HuggingFace Inference API
-# Plus simple, gratuit jusqu'à certain limit
+```env
+# Frontend (.env)
+VITE_API_URL=http://localhost:8000
+VITE_SUPABASE_URL=https://xxx.supabase.co
+VITE_SUPABASE_ANON_KEY=xxx
+
+# Backend (.env)
+SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_KEY=xxx
 ```
 
-### 3. Database (Supabase)
-```bash
-# Créer un projet sur supabase.com
-#Importer schema.sql
-```
+## 📄 License
+
+MIT © 2026 dropmoltbot
 
 ---
 
-## 📁 Structure
-
-```
-dreamverse/
-├── frontend/           # React app
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── hooks/
-│   │   └── lib/
-│   └── package.json
-├── backend/           # FastAPI
-│   ├── routes/
-│   ├── services/
-│   ├── models/
-│   └── main.py
-├── ai/               # MusicGen
-│   ├── docker/
-│   └── inference.py
-└── supabase/
-    ├── schema.sql
-    └── seed.sql
-```
-
----
-
-## 🎵 MusicGen - Génération
-
-```python
-from audiocraft.models import MusicGen
-
-model = MusicGen.get_pretrained('facebook/musicgen-large')
-model.set_generation_duration(30)  # 30 seconds
-
-# Generate from text prompt
-output = model.generate(
-    descriptions=["lo-fi chill beats with piano and guitar"],
-    progress=True
-)
-
-# Save audio
-output[0].export("output.wav")
-```
-
----
-
-## 👤 Auth Flow
-
-```
-User → Frontend → Supabase Auth → JWT Token
-                              ↓
-                      Store in localStorage
-                              ↓
-              Include in API requests: Authorization: Bearer <token>
-                              ↓
-                      Backend validates with Supabase
-```
-
----
-
-## 💰 Coût Open Source
-
-| Service | Free Tier | Paid |
-|---------|-----------|------|
-| **Supabase** | 500MB DB, 1GB Storage, 50K MAU | $25/mo |
-| **HuggingFace** | 500 inference minutes/mo | $10/mo |
-| **Vercel** | 100GB bandwidth | $20/mo |
-| **Railway** | $5 credit/mo | $20/mo |
-| **Total** | **~Free** | **~$75/mo** |
-
----
-
-## 🚀 Déploiement
-
-### Backend (Railway/Render)
-```bash
-railway init
-railway up
-```
-
-### AI Service (HuggingFace Spaces)
-```bash
-# Déployer sur HuggingFace Spaces (gratuit)
-hf space create dreamverse-musicgen
-git push
-```
-
----
-
-## 📝 License
-
-MIT License - 2026 dropmoltbot
+<p align="center">Made with 🎵 by <a href="https://github.com/dropmoltbot">dropmoltbot</a></p>
