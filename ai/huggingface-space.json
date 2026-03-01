@@ -1,0 +1,10 @@
+{
+  "title": "dreamverse-musicgen",
+  "emoji": "🎵",
+  "colorFrom": "purple",
+  "colorTo": "pink",
+  "sdk": "docker",
+  "app_port": 7860,
+  "requirements": "",
+  "dockerfile": "FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\n\nWORKDIR /app\n\nRUN apt-get update && apt-get install -y ffmpeg libsndfile1 && rm -rf /var/lib/apt/lists/*\n\nRUN pip install --no-cache-dir audiocraft einops scipy\n\nCOPY inference.py .\n\nEXPOSE 7860\n\nCMD [\"python\", \"inference.py\"]"
+}
